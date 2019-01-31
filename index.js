@@ -86,4 +86,4 @@ function plugin (options) {
   return new Copier(options);
 }
 
-export default plugin;
+module.exports = plugin;
