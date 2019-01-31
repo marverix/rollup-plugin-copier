@@ -1,5 +1,11 @@
 # rollup-plugin-copier
 
+[![Build Status](https://img.shields.io/travis/com/marverix/rollup-plugin-copier/master.svg)](https://travis-ci.com/marverix/rollup-plugin-copier)
+[![Current Release](https://img.shields.io/github/release/marverix/rollup-plugin-copier.svg)](releases)
+[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](LICENSE)
+
+Simple Rollup.js plugin that copies desired files
+
 
 ## Installation
 
