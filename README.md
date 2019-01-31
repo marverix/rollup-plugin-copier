@@ -62,6 +62,12 @@ export default [
 
       Destination path
 
+    * `createPath`
+
+      _Optional, Default `false`_
+
+      If path for destination file doesn't exist - create it.
+
 
   * `hookOn`
 

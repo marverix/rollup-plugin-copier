@@ -9,13 +9,18 @@ const copier = require('../index');
 
 const TEST_RUN_DIR = 'test/_run';
 
-function clearEnv() {
-  fs.readdirSync(TEST_RUN_DIR).forEach(function(name) {
-    fs.unlinkSync(`${TEST_RUN_DIR}/${name}`);
+function clearEnv(path = TEST_RUN_DIR) {
+  fs.readdirSync(path).forEach(function(name) {
+    var filePath = `${path}/${name}`;
+    var stat = fs.statSync(filePath);
+    if(stat.isDirectory()) {
+      clearEnv(filePath);
+    } else {
+      fs.unlinkSync(filePath);
+    }
   });
-  fs.rmdirSync(TEST_RUN_DIR);
+  fs.rmdirSync(path);
 }
-
 
 
 describe('rollup-plugin-copier', function() {
@@ -173,6 +178,78 @@ describe('rollup-plugin-copier', function() {
         expect(buffDest.equals(buffSrc)).to.be.true;
       });
 
+    });
+  });
+
+  describe('createPath flag', function() {
+    it('Should not copy file when createPath is not set', function() {
+      return new Promise(function(resolve, reject) {
+        rollup.rollup({
+          input: 'index.js',
+          plugins: [
+            copier({
+              items: [
+                {
+                  src: `${TEST_RUN_DIR}/enFile.txt`,
+                  dest: `${TEST_RUN_DIR}/sub-dir/enFile-test-createPath.txt`
+                }
+              ]
+            })
+          ]
+        }).then(reject).catch(function(err) {
+          expect(err.plugin).to.be.equal('rollup-plugin-copier');
+          expect(err.message).to.be.equal("Destination for file test/_run/sub-dir/enFile-test-createPath.txt doesn't exist");
+          resolve();
+        });
+      });
+    });
+
+    it('Should not copy file when createPath is set to false', function() {
+      return new Promise(function(resolve, reject) {
+        rollup.rollup({
+          input: 'index.js',
+          plugins: [
+            copier({
+              items: [
+                {
+                  src: `${TEST_RUN_DIR}/enFile.txt`,
+                  dest: `${TEST_RUN_DIR}/sub-dir/enFile-test-createPath.txt`,
+                  createPath: false
+                }
+              ]
+            })
+          ]
+        }).then(reject).catch(function(err) {
+          expect(err.plugin).to.be.equal('rollup-plugin-copier');
+          expect(err.message).to.be.equal("Destination for file test/_run/sub-dir/enFile-test-createPath.txt doesn't exist");
+          resolve();
+        });
+      });
+    });
+
+    it('Should copy file when createPath is set to true', function() {
+      return new Promise(function(resolve, reject) {
+        rollup.rollup({
+          input: 'index.js',
+          plugins: [
+            copier({
+              items: [
+                {
+                  src: `${TEST_RUN_DIR}/enFile.txt`,
+                  dest: `${TEST_RUN_DIR}/sub-dir/enFile-test-createPath.txt`,
+                  createPath: true
+                }
+              ]
+            })
+          ]
+        }).then(function() {
+          expect(fs.existsSync(`${TEST_RUN_DIR}/sub-dir/enFile-test-createPath.txt`)).to.be.true;
+          const buffSrc = fs.readFileSync(`${TEST_RUN_DIR}/enFile.txt`);
+          const buffDest = fs.readFileSync(`${TEST_RUN_DIR}/sub-dir/enFile-test-createPath.txt`);
+          expect(buffDest.equals(buffSrc)).to.be.true;
+          resolve();
+        }).catch(reject);
+      });
     });
   });
 

@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 
 function Copier (options) {
   if (options == null) {
@@ -26,6 +27,7 @@ function Copier (options) {
    * @typedef {Object} ToCopy
    * @property {string} src - Source
    * @property {string} dest - Destination
+   * @property {boolean=false} createPath - Create path if doesn't exist
    */
 
   /**
@@ -54,8 +56,16 @@ function Copier (options) {
    */
   this[this._hookOn] = function() {
     var promises = that._items.map(function(item) {
+      item.createPath = item.createPath == null ? false : item.createPath;
+
       return new Promise(function(resolve, reject) {
         that._debug(`${item.src} → ${item.dest}`);
+
+        if (!that._itemDestinationExists(item)) {
+          reject(`Destination for file ${item.dest} doesn't exist`);
+          return;
+        }
+        
         fs.copyFile(item.src, item.dest, function(err) {
           if (err) {
             reject(err);
@@ -80,6 +90,31 @@ function Copier (options) {
     }
   };
 
+  /**
+   * Item destination exists
+   * @param item {ToCopy}
+   * @private
+   */
+  this._itemDestinationExists = function(item) {    
+    if (fs.existsSync(path.dirname(item.dest))) {
+      return true;
+    } else if (item.createPath) {
+      mkDirP(item.dest);
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+}
+
+function mkDirP(dest) {
+  var dirName = path.dirname(dest);
+
+  if (!fs.existsSync(dirName)) {
+    mkDirP(dirName);
+    fs.mkdirSync(dirName);
+  }
 }
 
 function plugin (options) {
