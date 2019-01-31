@@ -1,0 +1,26 @@
+# Static files for README
+_static/
+
+# Documentation
+docs/
+jsdoc.json
+
+# Tests related
+test/
+coverage/
+
+# Lint config
+.eslint*
+
+# Husky config
+.huskyrc.json
+
+# npm files
+*.tgz
+
+# Travis files
+.travis*
+
+# IDE files
+.vscode/
+.idea/

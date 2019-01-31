@@ -1,0 +1,11 @@
+# npm
+node_modules/
+*.tgz
+
+# tests
+coverage/
+test/_run/
+
+# IDE
+.vscode/
+.idea/

@@ -1,0 +1,38 @@
+{
+  "name": "rollup-plugin-copier",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "npx eslint .",
+    "test": "npx mocha -r esm"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marverix/rollup-plugin-copier.git"
+  },
+  "keywords": [
+    "rollup",
+    "plugin",
+    "rollup-plugin",
+    "copy",
+    "assets",
+    "copier",
+    "rollup-plugin-copier",
+    "rollup-plugin-copy"
+  ],
+  "author": "Marek Sierociński <mareksierocinski@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marverix/rollup-plugin-copier/issues"
+  },
+  "homepage": "https://github.com/marverix/rollup-plugin-copier#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^5.12.1",
+    "esm": "^3.2.0",
+    "husky": "^1.3.1",
+    "mocha": "^5.2.0",
+    "rollup": "^1.1.2"
+  }
+}
