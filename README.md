@@ -92,7 +92,7 @@ who participated in this project.
 ## Thanks
 
 This plugin is heavly inspired by [rollup-plugin-copy](https://github.com/meuter/rollup-plugin-copy)
-(created by [meuter](https://github.com/meuter)), but it seems that it's not more developed/fixed.
+(created by [meuter](https://github.com/meuter)).
 
 
 ## License
