@@ -18,8 +18,7 @@
     "copy",
     "assets",
     "copier",
-    "rollup-plugin-copier",
-    "rollup-plugin-copy"
+    "rollup-plugin-copier"
   ],
   "author": "Marek Sierociński <mareksierocinski@gmail.com>",
   "license": "ISC",
